@@ -29,10 +29,11 @@ init =
     , dragger = Nothing
     , drag = vec2 0 0
     , camera = Camera (vec3 10 10 10) (vec3 0 0 0) 1.0
-    , worldSpeed = 3
+    , worldSpeed = 1
     , worldFrames = 0
     , world =
-        (block 3 3 ++ blinker -3 -3 ++ toad -10 5 ++ beacon -10 8)
+        gosperGliderGun -25 -5
+            --(block 3 3 ++ blinker -3 -3 ++ toad -10 5 ++ beacon -10 8)
             |> GameOfLife.worldWithCells
     }
 
@@ -75,5 +76,44 @@ toad x y =
     ]
 
 
+beacon : Int -> Int -> List GameOfLife.Cell
 beacon x y =
     block x y ++ block (x + 2) (y + 2)
+
+
+gosperGliderGun : Int -> Int -> List GameOfLife.Cell
+gosperGliderGun x y =
+    """
+........................O
+......................O.O
+............OO......OO............OO
+...........O...O....OO............OO
+OO........O.....O...OO
+OO........O...O.OO....O.O
+..........O.....O.......O
+...........O...O
+............OO
+"""
+        |> parseCells x y
+
+
+parseCells : Int -> Int -> String -> List GameOfLife.Cell
+parseCells dx dy str =
+    let
+        parseLine y line =
+            line
+                |> String.toList
+                |> List.indexedMap (\x -> \char -> { x = x + dx, y = y + dy, char = char })
+                |> List.filterMap
+                    (\boo ->
+                        if boo.char == 'O' then
+                            Just (GameOfLife.cellAtPosition boo.x boo.y)
+
+                        else
+                            Nothing
+                    )
+    in
+    str
+        |> String.lines
+        |> List.indexedMap parseLine
+        |> List.concat
