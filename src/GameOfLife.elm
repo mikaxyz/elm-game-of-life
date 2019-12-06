@@ -69,7 +69,7 @@ isNeighbor (Cell c1) (Cell c2) =
 run : World -> World
 run (World cells) =
     let
-        alive =
+        existing =
             cells
                 |> List.filter (isAlive (World cells))
 
@@ -77,18 +77,14 @@ run (World cells) =
             [ Cell { x = cell.x - 1, y = cell.y - 1 }
             , Cell { x = cell.x + 0, y = cell.y - 1 }
             , Cell { x = cell.x + 1, y = cell.y - 1 }
-
-            --
             , Cell { x = cell.x - 1, y = cell.y + 0 }
             , Cell { x = cell.x + 1, y = cell.y + 0 }
-
-            --
             , Cell { x = cell.x - 1, y = cell.y + 1 }
             , Cell { x = cell.x + 0, y = cell.y + 1 }
             , Cell { x = cell.x + 1, y = cell.y + 1 }
             ]
 
-        newborns =
+        new =
             cells
                 |> List.map withNeighbors
                 |> List.concat
@@ -99,7 +95,7 @@ run (World cells) =
                 |> Set.toList
                 |> List.map (\( x, y ) -> Cell { x = x, y = y })
     in
-    World (newborns ++ alive)
+    World (new ++ existing)
 
 
 toList : World -> List ( Int, Int )
