@@ -122,19 +122,17 @@ scene drag model =
                     vertexShader
                     fragmentShader
                     (Xyz.Cube.colorful 0.9 0.9 0.9)
-                    (uniforms model.camera (Vec3.vec3 x y 0) drag ( x, y ))
+                    (uniforms model.camera drag ( x, y ))
             )
 
 
-uniforms : Camera -> Vec3 -> Vec2 -> ( Float, Float ) -> Uniforms
-uniforms camera_ playerPos drag ( x, y ) =
+uniforms : Camera -> Vec2 -> ( Float, Float ) -> Uniforms
+uniforms camera_ drag ( x, y ) =
     { rotation = Mat4.makeRotate (Vec2.getX drag * 0.05) (vec3 0 1 0)
     , translate = Mat4.makeTranslate (vec3 x 0 y)
     , perspective = perspective
     , camera = camera camera_
-    , playerPos = playerPos
     , cameraFocus = camera_.focus
-    , receiveShadow = 0.0
     }
 
 
@@ -143,9 +141,7 @@ type alias Uniforms =
     , translate : Mat4
     , perspective : Mat4
     , camera : Mat4
-    , playerPos : Vec3
     , cameraFocus : Vec3
-    , receiveShadow : Float
     }
 
 
