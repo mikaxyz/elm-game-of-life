@@ -28,7 +28,7 @@ suite =
                         GameOfLife.cellAtPosition 0 0
                 in
                 GameOfLife.isAlive world cell
-                    |> Expect.false "Cell is alive"
+                    |> Expect.equal False
         , test "alive cell with 1 neighbour is dead" <|
             \_ ->
                 let
@@ -42,7 +42,7 @@ suite =
                         GameOfLife.cellAtPosition 1 0
                 in
                 GameOfLife.isAlive world cell
-                    |> Expect.false "Cell is alive"
+                    |> Expect.equal False
         , test "alive cell with 2 neighbours is alive" <|
             \_ ->
                 let
@@ -57,7 +57,7 @@ suite =
                         GameOfLife.cellAtPosition 1 0
                 in
                 GameOfLife.isAlive world cell
-                    |> Expect.true "Cell is dead"
+                    |> Expect.equal True
         , test "alive cell with 3 neighbours is alive" <|
             \_ ->
                 let
@@ -73,7 +73,7 @@ suite =
                         GameOfLife.cellAtPosition 1 0
                 in
                 GameOfLife.isAlive world cell
-                    |> Expect.true "Cell is dead"
+                    |> Expect.equal True
         , test "alive cell with 4 neighbours is dead" <|
             \_ ->
                 let
@@ -90,7 +90,7 @@ suite =
                         GameOfLife.cellAtPosition 0 0
                 in
                 GameOfLife.isAlive world cell
-                    |> Expect.false "Cell is alive"
+                |> Expect.equal False
         , test "dead cell with two neighbours is dead" <|
             \_ ->
                 let
@@ -104,7 +104,7 @@ suite =
                         GameOfLife.cellAtPosition 0 0
                 in
                 GameOfLife.isAlive world cell
-                    |> Expect.false "Cell is alive"
+                |> Expect.equal False
         , test "dead cell with three neighbours is alive" <|
             \_ ->
                 let
@@ -119,7 +119,7 @@ suite =
                         GameOfLife.cellAtPosition 0 0
                 in
                 GameOfLife.isAlive world cell
-                    |> Expect.true "Cell is dead"
+                |> Expect.equal True
 
         -- RUN
         , test "does blinker" <|
